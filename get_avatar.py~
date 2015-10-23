@@ -13,7 +13,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument(  'username')
 args = parser.parse_args()
 # call the github api and get user info
-RequestUrl = 'https://api.github.com/users/' + args.username
+RequestUrl = 'https://api.github.com/users/' + ARGS.username
 result = requests.get( RequestUrl )
 if result.ok :
     user_info = json.loads(result.content)
@@ -24,5 +24,5 @@ else:
 # download and save image file
 I = requests.get(avatarURL , stream=True)
 if I.ok:
-    with open(args.username + '.png' , 'wb') as OuTfIle:
+    with open(ARGS.username + '.png' , 'wb') as OuTfIle:
         shutil.copyfileobj( I.raw,  OuTfIle )
