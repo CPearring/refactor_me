@@ -12,6 +12,7 @@ import shutil
 parser = argparse.ArgumentParser()
 parser.add_argument(  'username')
 args = parser.parse_args()
+
 # call the github api and get user info
 RequestUrl = 'https://api.github.com/users/' + args.username
 result = requests.get( RequestUrl )
@@ -21,8 +22,9 @@ if result.ok :
 else:
     sys.stderr.write( "Error fetching user information for {0}; exiting now, sorry...\n".format(ARGS.username) )
     sys.exit()
+
 # download and save image file
-I = requests.get(avatarURL , stream=True)
-if I.ok:
-    with open(args.username + '.png' , 'wb') as OuTfIle:
-        shutil.copyfileobj( I.raw,  OuTfIle )
+image = requests.get(avatarURL , stream=True)
+if image.ok:
+    with open(args.username + '.png' , 'wb') as outfile:
+        shutil.copyfileobj( image.raw,  outfile )
