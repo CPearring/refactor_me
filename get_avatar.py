@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-# COMMAND LINE PROGRAM TO DOWNLOAD A USER'S AVATAR FROM GITHUB. USAGE: `PYTHON get_avatar.py <GITHUB_USERNAME>`. 
+# command line program to download a user's avatar from github. usage: `python GET_AVATAR.PY <github_username>`. 
+
 import sys, json
-# PARSE COMMAND LINE ARGUMENTS
+
+# parse command line arguments
 import argparse
 PARSER = argparse.ArgumentParser()
 PARSER.add_argument(  'username')
 ARGS = PARSER.parse_args()
-# CALL THE GITHUB API AND GET USER INFO
+# call the github api and get user info
 RequestUrl = 'https://api.github.com/users/' + ARGS.username
 import requests
 RESULT = requests.get( RequestUrl )
@@ -16,7 +18,7 @@ if RESULT.ok :
 else:
     sys.stderr.write( "Error fetching user information for {0}; exiting now, sorry...\n".format(ARGS.username) )
     sys.exit()
-# DOWNLOAD AND SAVE IMAGE FILE
+# download and save image file
 I = requests.get(avatarURL , stream=True)
 if I.ok:
     import shutil
