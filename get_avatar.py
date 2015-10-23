@@ -1,16 +1,18 @@
 #!/usr/bin/env python
 # command line program to download a user's avatar from github. usage: `python GET_AVATAR.PY <github_username>`. 
 
-import sys, json
+import sys
+import json
+import argparse
+import requests
+import shutil
 
 # parse command line arguments
-import argparse
 PARSER = argparse.ArgumentParser()
 PARSER.add_argument(  'username')
 ARGS = PARSER.parse_args()
 # call the github api and get user info
 RequestUrl = 'https://api.github.com/users/' + ARGS.username
-import requests
 RESULT = requests.get( RequestUrl )
 if RESULT.ok :
     user_info = json.loads(RESULT.content)
@@ -21,6 +23,5 @@ else:
 # download and save image file
 I = requests.get(avatarURL , stream=True)
 if I.ok:
-    import shutil
     with open(ARGS.username + '.png' , 'wb') as OuTfIle:
         shutil.copyfileobj( I.raw,  OuTfIle )
